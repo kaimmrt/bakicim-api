@@ -39,21 +39,12 @@ exports.login = async (req, res) => {
                         ...user.dataValues,
                         token: generateAccessToken(user)
                     }
-                    delete user.password
-                    delete user.birthday
-                    delete user.tc
-                    delete user.updatedAt
-                    delete user.createdAt
-                    delete user.cv
-                    delete user.cover_letter
-                    delete user.gender_id
-                    delete user.phone
-                    delete user.adress
-                    delete user.city
-                    delete user.district
-                    delete user.photo
 
-                    res.status(httpStatus.OK).send(user)
+
+                    res.json({
+                        result: true,
+                        user: user
+                    });
                 }
             }
             else

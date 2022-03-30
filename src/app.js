@@ -1,8 +1,9 @@
 const express = require('express');
 const helmet = require('helmet');
+const cors = require('cors');
 const config = require('./config');
 
-const { AuthRoutes, WorkTypePriceRoutes, FavoriteRoutes, OfferRoutes } = require('./routes')
+const { AuthRoutes, WorkTypePriceRoutes, FavoriteRoutes, OfferRoutes, AboutMeRoutes } = require('./routes')
 const verifyToken = require('./middleware/verify-token')
 
 config();
@@ -12,6 +13,7 @@ const app = express();
 
 app.use(express.json());
 app.use(helmet());
+app.use(cors());
 
 async function bootServer() {
     try {
@@ -21,6 +23,7 @@ async function bootServer() {
             console.log(`Listening on: http//localhost:${process.env.APP_PORT}`);
             app.use('/', AuthRoutes);
             app.use('/api', verifyToken);
+            app.use('/api/me', AboutMeRoutes);
             app.use('/api/work_type_price', WorkTypePriceRoutes);
             app.use('/api/favorite', FavoriteRoutes);
             app.use('/api/offer', OfferRoutes);
