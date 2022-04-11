@@ -3,7 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const config = require('./config');
 
-const { AuthRoutes, WorkTypePriceRoutes, WorkTypeRoutes, FavoriteRoutes, OfferRoutes, AboutMeRoutes } = require('./routes')
+const { AuthRoutes, AdvertRoutes, AdvertTypeRoutes, FavoriteRoutes, OfferRoutes, AboutMeRoutes } = require('./routes')
 const verifyToken = require('./middleware/verify-token')
 
 config();
@@ -24,8 +24,8 @@ async function bootServer() {
             app.use('/', AuthRoutes);
             app.use('/api', verifyToken);
             app.use('/api/me', AboutMeRoutes);
-            app.use('/api/work_type_price', WorkTypePriceRoutes);
-            app.use('/api/work_type', WorkTypeRoutes);
+            app.use('/api/advert', AdvertRoutes);
+            app.use('/api/advertType', AdvertTypeRoutes);
             app.use('/api/favorite', FavoriteRoutes);
             app.use('/api/offer', OfferRoutes);
         });

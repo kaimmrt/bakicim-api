@@ -1,4 +1,4 @@
-const { Favorite, WorkTypePrice, WorkType, User, UserType } = require('../helper/db')
+const { Favorite, Advert, AdvertType, User, UserType } = require('../helper/db')
 
 const insert = (data) => {
     return Favorite.create(data)
@@ -6,14 +6,14 @@ const insert = (data) => {
 
 const findByFavoriteId = (favorite_id) => {
     return Favorite.findByPk(favorite_id, {
-        include: [{ model: WorkTypePrice, include: [{ model: WorkType }] }, { model: User, include: [{ model: UserType }] }]
+        include: [{ model: Advert, include: [{ model: AdvertType }] }, { model: User, include: [{ model: UserType }] }]
     })
 }
 
 const findFavoritesByUser = (user_id) => {
     return Favorite.findAll({
         where: { user_id },
-        include: [{ model: WorkTypePrice, include: [{ model: WorkType }] }, { model: User, include: [{ model: UserType }] }]
+        include: [{ model: Advert, include: [{ model: AdvertType }] }, { model: User, include: [{ model: UserType }] }]
     })
 }
 

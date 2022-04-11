@@ -1,11 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define('work_type_price', {
-        work_type_price_id: {
+    return sequelize.define('advert', {
+        advert_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        work_type_id: {
+        advert_type_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
