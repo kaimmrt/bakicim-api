@@ -14,7 +14,6 @@ module.exports = (req, res, next) => {
             } else {
 
                 req.decoded = decoded;
-                console.log(req.decoded)
                 next();
             }
         });

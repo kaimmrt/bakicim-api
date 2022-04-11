@@ -1,6 +1,7 @@
 const { WorkTypePrice, WorkType, User, UserType } = require('../helper/db')
 
 const insert = (data) => {
+    console.log(data)
     return WorkTypePrice.create(data)
 }
 

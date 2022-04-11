@@ -10,13 +10,12 @@ const {
 
 exports.create = async (req, res) => {
     const { user_type_id, user_id } = req.decoded;
-
     if (user_type_id != 1)
         res.status(httpStatus.BAD_REQUEST).send({ message: "Sadece bakıcılar ilan verebilir!" })
     req.body.user_id = user_id
     insert(req.body)
         .then((response) => {
-            res.status(httpStatus.CREATED).send(response)
+            res.status(httpStatus.CREATED).send({ result: true, data: response })
         })
         .catch((err) => {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
@@ -26,7 +25,7 @@ exports.create = async (req, res) => {
 exports.getAll = async (req, res) => {
     findAll()
         .then((response) => {
-            res.status(httpStatus.OK).send(response)
+            res.status(httpStatus.OK).send({ result: true, data: response })
         })
         .catch((err) => {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)

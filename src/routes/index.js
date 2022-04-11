@@ -1,5 +1,6 @@
 module.exports.AuthRoutes = require('./auth')
 module.exports.AboutMeRoutes = require('./aboutMe')
 module.exports.WorkTypePriceRoutes = require('./workTypePrice')
+module.exports.WorkTypeRoutes = require('./workType')
 module.exports.FavoriteRoutes = require('./favorite')
 module.exports.OfferRoutes = require('./offer')
