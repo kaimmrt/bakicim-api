@@ -28,6 +28,16 @@ const updateAdvert = ({ advert_id, data }) => {
     return Advert.update(data, { where: { advert_id } })
 }
 
+const updateShowAdvert = ({ advert_id, status }) => {
+    Advert.update({
+        status: status == 1 ? 2 : 1
+    }, { where: { advert_id } })
+
+    return Advert.findAll({
+        include: [{ model: AdvertType }, { model: User, include: [{ model: UserType }] }]
+    })
+}
+
 const deleteAdvert = ({ advert_id }) => {
     return Advert.destroy({ where: { advert_id } })
 }
@@ -38,5 +48,6 @@ module.exports = {
     findByUserId,
     findByAdvertId,
     updateAdvert,
+    updateShowAdvert,
     deleteAdvert
 }

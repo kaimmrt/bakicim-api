@@ -4,7 +4,6 @@ const {
 } = require('../services/advertType')
 
 exports.getAll = async (req, res) => {
-    console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-")
     findAll()
         .then((response) => {
             res.status(httpStatus.OK).json({ result: true, data: response })

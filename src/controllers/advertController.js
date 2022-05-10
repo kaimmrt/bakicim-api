@@ -5,6 +5,7 @@ const {
     findByUserId,
     findByAdvertId,
     updateAdvert,
+    updateShowAdvert,
     deleteAdvert
 } = require('../services/advert')
 
@@ -70,7 +71,6 @@ exports.getByAdvertId = async (req, res) => {
 
 exports.update = async (req, res) => {
     const { user_type_id, user_id } = req.decoded;
-
     if (!req.params.advert_id) {
         return res.status(httpStatus.BAD_REQUEST).send({
             message: "id bilgisi bulunamadı"
@@ -94,6 +94,36 @@ exports.update = async (req, res) => {
                 res.status(httpStatus.NOT_FOUND).send({ message: "bu id bilgisine ait sonuç bulunumadı!" })
         })
         .catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
+        })
+}
+
+exports.showUpdate = async (req, res) => {
+    const { user_type_id, user_id } = req.decoded;
+    if (!req.params.advert_id) {
+        return res.status(httpStatus.BAD_REQUEST).send({
+            message: "id bilgisi bulunamadı"
+        })
+    }
+    if (user_type_id != 1)
+        res.status(httpStatus.BAD_REQUEST).send({ message: "Sadece bakıcılar ilan güncelleyebilir!" })
+    req.body.user_id = user_id
+    findByAdvertId(req.params.advert_id)
+        .then((response) => {
+            if (response) {
+                updateShowAdvert({ advert_id: req.params.advert_id, status: response.status })
+                    .then((response) => {
+                        res.status(httpStatus.OK).send(response)
+                    })
+                    .catch((err) => {
+                        res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
+                    })
+            }
+            else
+                res.status(httpStatus.NOT_FOUND).send({ message: "bu id bilgisine ait sonuç bulunumadı!" })
+        })
+        .catch((err) => {
+            console.log(err)
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
         })
 }
