@@ -1,40 +1,40 @@
-const { Advert, AdvertType, User, UserType } = require('../helper/db')
+const { Advert, AdvertType, User, UserType, AdvertTime } = require('../helper/db')
 
-const insert = (data) => {
+const insert = async (data) => {
     console.log(data)
-    return Advert.create(data)
+    return await Advert.create(data)
 }
 
-const findAll = () => {
-    return Advert.findAll({
-        include: [{ model: AdvertType }, { model: User, include: [{ model: UserType }] }]
+const findAll = async () => {
+    return await Advert.findAll({
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
     })
 }
 
-const findByUserId = (user_id) => {
-    return Advert.findAll({
+const findByUserId = async (user_id) => {
+    return await Advert.findAll({
         where: { user_id },
-        include: [{ model: AdvertType }, { model: User, include: [{ model: UserType }] }]
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
     })
 }
 
-const findByAdvertId = (advert_id) => {
-    return Advert.findByPk(advert_id, {
-        include: [{ model: AdvertType }, { model: User, include: [{ model: UserType }] }]
+const findByAdvertId = async (advert_id) => {
+    return await Advert.findByPk(advert_id, {
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
     })
 }
 
-const updateAdvert = ({ advert_id, data }) => {
-    return Advert.update(data, { where: { advert_id } })
+const updateAdvert = async ({ advert_id, data }) => {
+    return await Advert.update(data, { where: { advert_id } })
 }
 
-const updateShowAdvert = ({ advert_id, status }) => {
-    Advert.update({
+const updateShowAdvert = async ({ advert_id, status }) => {
+    await Advert.update({
         status: status == 1 ? 2 : 1
     }, { where: { advert_id } })
 
-    return Advert.findAll({
-        include: [{ model: AdvertType }, { model: User, include: [{ model: UserType }] }]
+    return await Advert.findAll({
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
     })
 }
 

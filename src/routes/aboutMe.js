@@ -6,5 +6,6 @@ const aboutMeController = require('../controllers/aboutMeController')
 const router = express.Router();
 
 router.post("/", aboutMeController.getMe)
+router.put("/update/:id", aboutMeController.updateProfile)
 
 module.exports = router;

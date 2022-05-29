@@ -1,7 +1,7 @@
 const { AdvertType } = require('../helper/db')
 
-const findAll = () => {
-    return AdvertType.findAll()
+const findAll = async () => {
+    return await AdvertType.findAll()
 }
 
 module.exports = {

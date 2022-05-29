@@ -1,7 +1,11 @@
-const { User } = require('../helper/db')
+const { User, Gender } = require('../helper/db')
 
-const findOneByEmail = (email) => {
-    return User.findOne({ where: { email } })
+const findOneByEmail = async (email) => {
+    return await User.findOne(
+        {
+            where: { email },
+            include: [{ model: Gender }]
+        })
 }
 
 const insert = (data) => {

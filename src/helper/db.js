@@ -13,6 +13,7 @@ db.User = require(__dirname + "/../models/User/User.js")(sequelize, Sequelize)
 db.UserType = require(__dirname + "/../models/User/UserType.js")(sequelize, Sequelize)
 db.Gender = require(__dirname + "/../models/Gender/Gender.js")(sequelize, Sequelize)
 db.AdvertType = require(__dirname + "/../models/Advert/AdvertType.js")(sequelize, Sequelize)
+db.AdvertTime = require(__dirname + "/../models/Advert/AdvertTime.js")(sequelize, Sequelize)
 db.Advert = require(__dirname + "/../models/Advert/Advert.js")(sequelize, Sequelize)
 db.Favorite = require(__dirname + "/../models/Favorite/Favorite.js")(sequelize, Sequelize)
 db.Offer = require(__dirname + "/../models/Offer/Offer.js")(sequelize, Sequelize)
@@ -37,6 +38,9 @@ db.User.belongsTo(db.Gender, { foreignKey: "gender_id", onDelete: "restrict", on
 
 db.AdvertType.hasMany(db.Advert, { foreignKey: "advert_type_id", onDelete: "restrict", onUpdate: "restrict" });
 db.Advert.belongsTo(db.AdvertType, { foreignKey: "advert_type_id", onDelete: "restrict", onUpdate: "restrict", });
+
+db.AdvertTime.hasMany(db.Advert, { foreignKey: "advert_time_id", onDelete: "restrict", onUpdate: "restrict" });
+db.Advert.belongsTo(db.AdvertTime, { foreignKey: "advert_time_id", onDelete: "restrict", onUpdate: "restrict", });
 
 db.User.hasMany(db.Advert, { foreignKey: "user_id", onDelete: "restrict", onUpdate: "restrict" });
 db.Advert.belongsTo(db.User, { foreignKey: "user_id", onDelete: "restrict", onUpdate: "restrict", });

@@ -9,6 +9,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
+        advert_time_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+        },
         user_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
