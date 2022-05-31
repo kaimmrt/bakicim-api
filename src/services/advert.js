@@ -1,4 +1,4 @@
-const { Advert, AdvertType, User, UserType, AdvertTime } = require('../helper/db')
+const { Advert, AdvertType, User, UserType, AdvertTime, Gender } = require('../helper/db')
 
 const insert = async (data) => {
     console.log(data)
@@ -7,20 +7,20 @@ const insert = async (data) => {
 
 const findAll = async () => {
     return await Advert.findAll({
-        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }, { model: Gender }] }]
     })
 }
 
 const findByUserId = async (user_id) => {
     return await Advert.findAll({
         where: { user_id },
-        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }, { model: Gender }] }]
     })
 }
 
 const findByAdvertId = async (advert_id) => {
     return await Advert.findByPk(advert_id, {
-        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }, { model: Gender }] }]
     })
 }
 
@@ -34,7 +34,7 @@ const updateShowAdvert = async ({ advert_id, status }) => {
     }, { where: { advert_id } })
 
     return await Advert.findAll({
-        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }] }]
+        include: [{ model: AdvertType }, { model: AdvertTime }, { model: User, include: [{ model: UserType }, { model: Gender }] }]
     })
 }
 
