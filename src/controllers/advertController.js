@@ -123,7 +123,6 @@ exports.showUpdate = async (req, res) => {
                 res.status(httpStatus.NOT_FOUND).send({ message: "bu id bilgisine ait sonuç bulunumadı!" })
         })
         .catch((err) => {
-            console.log(err)
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
         })
 }

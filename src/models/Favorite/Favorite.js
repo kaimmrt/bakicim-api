@@ -13,10 +13,5 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        status: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            defaultValue: 1
-        },
     })
 };

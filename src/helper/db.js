@@ -63,8 +63,8 @@ db.Favorite.belongsTo(db.Advert, { foreignKey: "advert_id", onDelete: "restrict"
 db.User.hasMany(db.Offer, { foreignKey: "user_id", onDelete: "restrict", onUpdate: "restrict" });
 db.Offer.belongsTo(db.User, { foreignKey: "user_id", onDelete: "restrict", onUpdate: "restrict", });
 
-db.User.hasMany(db.Offer, { foreignKey: "user_id", onDelete: "restrict", onUpdate: "restrict" });
-db.Offer.belongsTo(db.User, { foreignKey: "to_user_id", onDelete: "restrict", onUpdate: "restrict", });
+db.Advert.hasMany(db.Offer, { foreignKey: "advert_id", onDelete: "restrict", onUpdate: "restrict" });
+db.Offer.belongsTo(db.Advert, { foreignKey: "advert_id", onDelete: "restrict", onUpdate: "restrict", });
 
 // db.Offer.hasMany(db.Payment, { foreignKey: "offer_id", onDelete: "restrict", onUpdate: "restrict" });
 // db.Payment.belongsTo(db.Offer, { foreignKey: "offer_id", onDelete: "restrict", onUpdate: "restrict", });

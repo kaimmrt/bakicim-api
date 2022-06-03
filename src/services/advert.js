@@ -1,7 +1,6 @@
 const { Advert, AdvertType, User, UserType, AdvertTime, Gender } = require('../helper/db')
 
 const insert = async (data) => {
-    console.log(data)
     return await Advert.create(data)
 }
 

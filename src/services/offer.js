@@ -1,7 +1,7 @@
 const { Offer, User, UserType } = require('../helper/db')
 
-const insert = (data) => {
-    return Offer.create(data)
+const insert = async (data) => {
+    return await Offer.create(data)
 }
 
 const findByOfferId = (offer_id) => {
@@ -10,7 +10,14 @@ const findByOfferId = (offer_id) => {
     })
 }
 
+const findByAdvertIdAndUserId = async (data) => {
+    return await Offer.findOne({
+        where: { user_id: data.user_id, advert_id: data.advert_id }
+    })
+}
+
 module.exports = {
     insert,
-    findByOfferId
+    findByOfferId,
+    findByAdvertIdAndUserId
 }

@@ -1,29 +1,30 @@
 const { Favorite, Advert, AdvertType, User, UserType } = require('../helper/db')
 
-const insert = (data) => {
-    return Favorite.create(data)
+const insert = async (data) => {
+    return await Favorite.create(data)
 }
 
-const findByFavoriteId = (favorite_id) => {
-    return Favorite.findByPk(favorite_id, {
-        include: [{ model: Advert, include: [{ model: AdvertType }] }, { model: User, include: [{ model: UserType }] }]
-    })
-}
-
-const findFavoritesByUser = (user_id) => {
-    return Favorite.findAll({
+const findFavoritesByUser = async (user_id) => {
+    return await Favorite.findAll({
         where: { user_id },
         include: [{ model: Advert, include: [{ model: AdvertType }] }, { model: User, include: [{ model: UserType }] }]
     })
 }
 
-const deleteFavorite = ({ favorite_id }) => {
-    return Favorite.destroy({ where: { favorite_id } })
+const findFavoriteByUserIdAndAdvertId = async ({ user_id, advert_id }) => {
+    return await Favorite.findOne({
+        where: { user_id, advert_id },
+        include: [{ model: Advert, include: [{ model: AdvertType }] }, { model: User, include: [{ model: UserType }] }]
+    })
+}
+
+const deleteFavorite = async ({ user_id, advert_id }) => {
+    return await Favorite.destroy({ where: { user_id, advert_id } })
 }
 
 module.exports = {
     insert,
-    findByFavoriteId,
     deleteFavorite,
-    findFavoritesByUser
+    findFavoritesByUser,
+    findFavoriteByUserIdAndAdvertId
 }

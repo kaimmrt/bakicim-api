@@ -6,8 +6,7 @@ const favoriteController = require('../controllers/favoriteController')
 const router = express.Router();
 
 router.get("/", favoriteController.findAllByUser)
-router.route("/").post(validate(schemas.createValidation), favoriteController.create)
-router.delete("/:favorite_id", favoriteController.delete)
+router.route("/").post(validate(schemas.createValidation), favoriteController.createOrDelete)
 
 
 module.exports = router;

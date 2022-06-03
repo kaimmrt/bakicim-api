@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        to_user_id: {
+        advert_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
