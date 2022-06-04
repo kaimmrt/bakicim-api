@@ -7,20 +7,21 @@ exports.create = async (req, res) => {
     if (user_type_id != 2)
         res.status(httpStatus.BAD_REQUEST).send({ message: "Sadece ziyaretçiler teklif oluşturabilir!" })
     req.body.user_id = user_id
-    findByAdvertIdAndUserId(req.body).then((res) => {
-        console.log("res", res)
-        if (res) {
+    findByAdvertIdAndUserId(req.body).then((response) => {
+        console.log("res", response)
+        if (response) {
             console.log("girdi res")
-            insert(req.body)
-                .then((response) => {
-                    res.status(httpStatus.CREATED).send({ result: true, data: response })
-                })
-                .catch((err) => {
-                    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
-                })
-        } else {
+            console.log("res null")
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
                 result: false, message: 'İlgili ilana teklif vermiş bulunmaktasınız. İsterseniz teklifinizi güncelleyebilirsiniz.'
+            })
+        } else {
+            insert(req.body)
+            .then((response) => {
+                res.status(httpStatus.CREATED).send({ result: true, data: response })
+            })
+            .catch((err) => {
+                res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
             })
         }
     }).catch((err) => {

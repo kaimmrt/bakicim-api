@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('bitirme', 'root', 'root', {
     host: 'localhost',
-    port: 8889,
+    port: 3306,
     dialect: 'mysql',
     timezone: "+03:00",
     logging: false
