@@ -1,4 +1,4 @@
-const { Favorite, Advert, AdvertType, User, UserType, Gender } = require('../helper/db')
+const { Favorite, Advert, AdvertType,AdvertTime, User, UserType, Gender } = require('../helper/db')
 
 const insert = async (data) => {
     return await Favorite.create(data)
