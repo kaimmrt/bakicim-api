@@ -1,5 +1,5 @@
 const httpStatus = require('http-status')
-const { insert, findByOfferId, findByAdvertIdAndUserId } = require('../services/offer')
+const { insert, findByOfferId, findByAdvertIdAndUserId, findByUserId } = require('../services/offer')
 
 exports.create = async (req, res) => {
     console.log(req.body)
@@ -17,12 +17,12 @@ exports.create = async (req, res) => {
             })
         } else {
             insert(req.body)
-            .then((response) => {
-                res.status(httpStatus.CREATED).send({ result: true, data: response })
-            })
-            .catch((err) => {
-                res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
-            })
+                .then((response) => {
+                    res.status(httpStatus.CREATED).send({ result: true, data: response })
+                })
+                .catch((err) => {
+                    res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
+                })
         }
     }).catch((err) => {
         console.log(err)
@@ -46,5 +46,20 @@ exports.getByOfferId = async (req, res) => {
         })
         .catch((err) => {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
+        })
+}
+
+exports.getByUserId = async (req, res) => {
+    const { user_id } = req.decoded
+    console.log(user_id)
+    findByUserId(user_id)
+        .then((response) => {
+            if (response)
+                res.status(httpStatus.OK).send({ result: true, data: response })
+            else
+                res.status(httpStatus.NOT_FOUND).send({ message: "bu id bilgisine ait sonuç bulunumadı!" })
+        })
+        .catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
         })
 }

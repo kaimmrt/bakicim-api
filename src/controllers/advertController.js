@@ -30,14 +30,7 @@ exports.getAll = async (req, res) => {
 
     findAll()
         .then((adverts) => {
-            const newResponse = adverts.map(async (value, index) => {
-               const deneme = await findFavoriteByUserIdAndAdvertId(user_id, value.advert_id);
-               
-               console.log("ZORT",deneme);
-               return deneme;
-            });
-            console.log("NEWRESPONSE", newResponse);
-            res.status(httpStatus.OK).send({ result: true, data: newResponse })
+            res.status(httpStatus.OK).send({ result: true, data: adverts })
         })
         .catch((err) => {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)

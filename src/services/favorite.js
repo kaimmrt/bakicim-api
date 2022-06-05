@@ -18,10 +18,10 @@ const findFavoriteByAdvertId = async (advert_id) => {
     })
 }
 
-const findFavoriteByUserIdAndAdvertId = async (user_id, advert_id) => {
+const findFavoriteByUserIdAndAdvertId = async ({user_id, advert_id}) => {
     return await Favorite.findOne({
         where: { user_id, advert_id },
-        include: [{ model: Advert, include: [{ model: AdvertType }, { model: AdvertTime } , { model: User, include: [{ model: UserType }, { model: Gender }] }]}]
+        include: [{ model: Advert, include: [{ model: User }]}]
     })
 }
 
