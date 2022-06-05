@@ -1,3 +1,4 @@
+const { crossOriginResourcePolicy } = require('helmet');
 const httpStatus = require('http-status')
 const {
     insert,
@@ -7,7 +8,8 @@ const {
     updateAdvert,
     updateShowAdvert,
     deleteAdvert
-} = require('../services/advert')
+} = require('../services/advert');
+const { findFavoriteByUserIdAndAdvertId } = require('../services/favorite');
 
 exports.create = async (req, res) => {
     const { user_type_id, user_id } = req.decoded;
@@ -24,9 +26,18 @@ exports.create = async (req, res) => {
 }
 
 exports.getAll = async (req, res) => {
+    const { user_type_id, user_id } = req.decoded;
+
     findAll()
-        .then((response) => {
-            res.status(httpStatus.OK).send({ result: true, data: response })
+        .then((adverts) => {
+            const newResponse = adverts.map(async (value, index) => {
+               const deneme = await findFavoriteByUserIdAndAdvertId(user_id, value.advert_id);
+               
+               console.log("ZORT",deneme);
+               return deneme;
+            });
+            console.log("NEWRESPONSE", newResponse);
+            res.status(httpStatus.OK).send({ result: true, data: newResponse })
         })
         .catch((err) => {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
@@ -41,8 +52,10 @@ exports.getByUserId = async (req, res) => {
     }
     findByUserId(req.params.user_id)
         .then((response) => {
-            if (response)
-                res.status(httpStatus.OK).send(response)
+            if (response) {
+                res.status(httpStatus.OK).send({ result: true, data: response })
+            }
+
             else
                 res.status(httpStatus.NOT_FOUND).send({ message: "bu id bilgisine ait sonuç bulunumadı!" })
         })

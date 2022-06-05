@@ -1,5 +1,5 @@
 const httpStatus = require('http-status')
-const { insert, deleteFavorite, findFavoritesByUser, findFavoriteByUserIdAndAdvertId } = require('../services/favorite')
+const { insert, deleteFavorite, findFavoritesByUser, findFavoriteByUserIdAndAdvertId,findFavoriteByAdvertId } = require('../services/favorite')
 
 exports.findAllByUser = async (req, res) => {
     const { user_type_id, user_id } = req.decoded;
@@ -7,6 +7,20 @@ exports.findAllByUser = async (req, res) => {
     if (user_type_id != 2)
         res.status(httpStatus.BAD_REQUEST).send({ message: "Sadece ziyaretçiler favorileri görebilir!" })
     findFavoritesByUser(user_id)
+        .then((response) => {
+            res.status(httpStatus.OK).send({ result: true, data: response })
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
+        })
+}
+
+exports.findByAdvertId = async (req, res) => {
+    const { user_type_id, user_id } = req.decoded;
+    if (user_type_id != 2)
+        res.status(httpStatus.BAD_REQUEST).send({ message: "Sadece ziyaretçiler favorileri görebilir!" })
+    findFavoriteByAdvertId(user_id)
         .then((response) => {
             res.status(httpStatus.OK).send({ result: true, data: response })
         })

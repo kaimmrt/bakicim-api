@@ -11,7 +11,14 @@ const findFavoritesByUser = async (user_id) => {
     })
 }
 
-const findFavoriteByUserIdAndAdvertId = async ({ user_id, advert_id }) => {
+const findFavoriteByAdvertId = async (advert_id) => {
+    return await Favorite.findOne({
+        where: { advert_id },
+        include: [{ model: Advert, include: [{ model: AdvertType }] }, { model: User, include: [{ model: UserType }] }]
+    })
+}
+
+const findFavoriteByUserIdAndAdvertId = async (user_id, advert_id) => {
     return await Favorite.findOne({
         where: { user_id, advert_id },
         include: [{ model: Advert, include: [{ model: AdvertType }] }, { model: User, include: [{ model: UserType }] }]
@@ -26,5 +33,6 @@ module.exports = {
     insert,
     deleteFavorite,
     findFavoritesByUser,
-    findFavoriteByUserIdAndAdvertId
+    findFavoriteByUserIdAndAdvertId,
+    findFavoriteByAdvertId,
 }
