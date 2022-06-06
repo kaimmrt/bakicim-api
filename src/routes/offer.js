@@ -10,7 +10,7 @@ router.route("/").post(validate(schemas.createValidation), offerController.creat
 
 router.get("/",offerController.getByUserId)
 router.get("/accept_offer",offerController.getAcceptOffer)
-router.get("/:advert_id",offerController.getAdvertsOffer)
+router.get("/advert/:advert_id",offerController.getAdvertsOffer)
 router.route("/").put(validate(schemas.updateValidation), offerController.updateOffer)
 router.route("/accept").put(validate(schemas.statusUpdateValidation), offerController.acceptOffer)
 router.route("/decline").put(validate(schemas.statusUpdateValidation), offerController.declineOffer)

@@ -48,13 +48,16 @@ const declineOfferService = async (offer_id) => {
 
 const findAcceptOffer = async (user_id) => {
     return await Offer.findAll({
-        where: { user_id, status: 2 }
+        where: { user_id, status: 2 },
+        include: [{ model: Advert, include: [{ model: User, include: [{ model: Gender }, { model: UserType }] }, { model: AdvertTime }, { model: AdvertType }] }]
+
     })
 }
 
 const fetchAdvertsOffer = async (advert_id) => {
     return await Offer.findAll({
-        where: { advert_id }
+        where: { advert_id },
+        include: [{ model: Advert, include: [{ model: User, include: [{ model: Gender }, { model: UserType }] }, { model: AdvertTime }, { model: AdvertType }] }]
     })
 }
 
