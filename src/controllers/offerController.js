@@ -1,5 +1,5 @@
 const httpStatus = require('http-status')
-const { insert, findByOfferId, findByAdvertIdAndUserId, findByUserId } = require('../services/offer')
+const { insert, findByOfferId, findByAdvertIdAndUserId, findByUserId, updateOfferPrice, removeOffer } = require('../services/offer')
 
 exports.create = async (req, res) => {
     console.log(req.body)
@@ -60,6 +60,75 @@ exports.getByUserId = async (req, res) => {
                 res.status(httpStatus.NOT_FOUND).send({ message: "bu id bilgisine ait sonuç bulunumadı!" })
         })
         .catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
+        })
+}
+
+exports.updateOffer = async (req, res) => {
+    const { price, offer_id } = req.body
+
+    findByOfferId(offer_id)
+        .then((offer) => {
+            if (offer) {
+                updateOfferPrice({ offer_id, data: price }).then((response) => {
+                    res.status(httpStatus.OK).send({ result: true, data: response })
+                })
+            } else {
+                res.status(httpStatus.NOT_FOUND).send({ message: "bu id bilgisine ait sonuç bulunumadı!" })
+            }
+        }).catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
+        })
+}
+
+exports.deleteOffer = async (req, res) => {
+    const { offer_id } = req.params
+
+    findByOfferId(offer_id)
+        .then((offer) => {
+            if (offer) {
+                removeOffer(offer_id).then((response) => {
+                    res.status(httpStatus.OK).send({ result: true, data: response })
+                })
+            } else {
+                res.status(httpStatus.NOT_FOUND).send({result:false, message: "bu id bilgisine ait sonuç bulunumadı!" })
+            }
+        }).catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
+        })
+
+}
+
+exports.acceptOffer=async(req,res)=>{
+    const { offer_id } = req.body
+
+    findByOfferId(offer_id)
+        .then((offer) => {
+            if (offer) {
+                acceptOfferService(offer_id).then((response) => {
+                    res.status(httpStatus.OK).send({ result: true, data: response })
+                })
+            } else {
+                res.status(httpStatus.NOT_FOUND).send({result:false, message: "bu id bilgisine ait sonuç bulunumadı!" })
+            }
+        }).catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
+        })
+}
+
+exports.declineOffer=async(req,res)=>{
+    const { offer_id } = req.body
+
+    findByOfferId(offer_id)
+        .then((offer) => {
+            if (offer) {
+                declineOfferService(offer_id).then((response) => {
+                    res.status(httpStatus.OK).send({ result: true, data: response })
+                })
+            } else {
+                res.status(httpStatus.NOT_FOUND).send({result:false, message: "bu id bilgisine ait sonuç bulunumadı!" })
+            }
+        }).catch((err) => {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ result: false, message: err })
         })
 }
