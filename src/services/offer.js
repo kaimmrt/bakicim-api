@@ -4,7 +4,7 @@ const insert = async (data) => {
     return await Offer.create(data)
 }
 
-const findByOfferId =async (offer_id) => {
+const findByOfferId = async (offer_id) => {
     return await Offer.findByPk(offer_id, {
         include: [{ model: User, include: [{ model: UserType }] }]
     })
@@ -30,22 +30,27 @@ const updateOfferPrice = async ({ offer_id, data }) => {
 }
 
 
-const removeOffer =async ( offer_id ) => {
+const removeOffer = async (offer_id) => {
     return await Offer.destroy({ where: { offer_id } })
 }
 
-const acceptOfferService=async(offer_id)=>{
+const acceptOfferService = async (offer_id) => {
     return await Offer.update({
-        status:2
-    },{where:{offer_id}})
+        status: 2
+    }, { where: { offer_id } })
 }
 
-const declineOfferService=async(offer_id)=>{
+const declineOfferService = async (offer_id) => {
     return await Offer.update({
-        status:3
-    },{where:{offer_id}})
+        status: 3
+    }, { where: { offer_id } })
 }
 
+const findAcceptOffer = async (user_id) => {
+    return await Offer.findAll({
+        where: { user_id, status: 2 }
+    })
+}
 module.exports = {
     insert,
     updateOfferPrice,
@@ -54,5 +59,6 @@ module.exports = {
     findByAdvertIdAndUserId,
     removeOffer,
     acceptOfferService,
-    declineOfferService
+    declineOfferService,
+    findAcceptOffer
 }
