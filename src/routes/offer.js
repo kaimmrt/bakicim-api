@@ -6,6 +6,8 @@ const offerController = require('../controllers/offerController')
 const router = express.Router();
 
 router.get("/:offer_id", offerController.getByOfferId)
+router.route("/").post(validate(schemas.createValidation), offerController.create)
+
 router.get("/",offerController.getByUserId)
 router.route("/").put(validate(schemas.updateValidation), offerController.updateOffer)
 router.route("/accept").put(validate(schemas.statusUpdateValidation), offerController.acceptOffer)
