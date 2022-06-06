@@ -9,7 +9,7 @@ router.get("/:offer_id", offerController.getByOfferId)
 router.route("/").post(validate(schemas.createValidation), offerController.create)
 
 router.get("/",offerController.getByUserId)
-router.get("/",offerController.getAcceptOffer)
+router.get("/accept_offer",offerController.getAcceptOffer)
 router.get("/:advert_id",offerController.getAdvertsOffer)
 router.route("/").put(validate(schemas.updateValidation), offerController.updateOffer)
 router.route("/accept").put(validate(schemas.statusUpdateValidation), offerController.acceptOffer)
