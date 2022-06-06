@@ -1,5 +1,5 @@
 const httpStatus = require('http-status')
-const { insert, findByOfferId, findByAdvertIdAndUserId, findByUserId, updateOfferPrice, removeOffer,findAcceptOffer } = require('../services/offer')
+const { insert, findByOfferId, findByAdvertIdAndUserId, findByUserId, updateOfferPrice, removeOffer, findAcceptOffer,fetchAdvertsOffer } = require('../services/offer')
 
 exports.create = async (req, res) => {
     console.log(req.body)
@@ -134,12 +134,24 @@ exports.declineOffer = async (req, res) => {
 }
 
 exports.getAcceptOffer = async (req, res) => {
-    const {user_id}=req.decoded
+    const { user_id } = req.decoded
     findAcceptOffer(user_id)
-    .then((adverts) => {
-        res.status(httpStatus.OK).send({ result: true, data: adverts })
-    })
-    .catch((err) => {
-        res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
-    })
+        .then((adverts) => {
+            res.status(httpStatus.OK).send({ result: true, data: adverts })
+        })
+        .catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
+        })
+}
+
+exports.getAdvertsOffer = async (req, res) => {
+    const { user_id } = req.decoded
+    const { advert_id } = req.params
+    fetchAdvertsOffer(advert_id)
+        .then((adverts) => {
+            res.status(httpStatus.OK).send({ result: true, data: adverts })
+        })
+        .catch((err) => {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err)
+        })
 }

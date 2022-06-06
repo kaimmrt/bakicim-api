@@ -51,6 +51,13 @@ const findAcceptOffer = async (user_id) => {
         where: { user_id, status: 2 }
     })
 }
+
+const fetchAdvertsOffer = async (advert_id) => {
+    return await Offer.findAll({
+        where: { advert_id }
+    })
+}
+
 module.exports = {
     insert,
     updateOfferPrice,
@@ -60,5 +67,6 @@ module.exports = {
     removeOffer,
     acceptOfferService,
     declineOfferService,
+    fetchAdvertsOffer,
     findAcceptOffer
 }
