@@ -1,5 +1,5 @@
 const httpStatus = require('http-status')
-const { insert, findByOfferId, findByAdvertIdAndUserId, findByUserId, updateOfferPrice, removeOffer, findAcceptOffer,fetchAdvertsOffer } = require('../services/offer')
+const { insert, findByOfferId, findByAdvertIdAndUserId, findByUserId, updateOfferPrice, removeOffer, findAcceptOffer,fetchAdvertsOffer,acceptOfferService,declineOfferService } = require('../services/offer')
 
 exports.create = async (req, res) => {
     console.log(req.body)
